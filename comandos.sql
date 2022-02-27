@@ -209,3 +209,41 @@ FROM Person.Person
 SELECT * FROM Production.Product
 WHERE ListPrice > (SELECT AVG(ListPrice) FROM Production.Product)
 
+--SELF JOIN--
+SELECT A.Discount FROM DBO.[Order Details] A, DBO.[Order Details] B
+WHERE A.Discount = B.Discount
+--não é self join--
+SELECT A.Discount FROM DBO.[Order Details] A
+INNER JOIN DBO.[Order Details] B ON A.Discount = B.Discount
+
+--TIPOS DE DADOS--
+--BOLEANOS, CARACTERES, NÚMEROS, TEMPORAIS
+/*
+
+## CARACTERES
+tamanho fixo - CHAR // permite inserir até uma quantiudade fixa de cartacteres s sempre ocupa todo o espaço reservado 10/50
+
+tamanhgo variado - VARCHAR ou NVARCHAR // permite inserir até uma quantidade que for definida, porem só usa o espaço que for preenchido 10/50
+
+## NÚMEROS
+### VALORES EXATOS
+
+1 - TINYINT // não tem parte valor fracionado (ex. 1.43, 24.23) somente 1,123126, 324246, 313123 etc...
+2 - SMALLINT // mesma coisa porem limite maior
+3 - INT // mesma coisa porem limite maior
+4 - BIGINT // mesma coisa porem limite maior
+5 - NUMERIC ou DECIMAL // valores exatos, porem permite ter parte fracionados, que também pode ser especificado a precisão e escala (escala ou número de digitos na parte fracional) -ex: numeric (5, 2) 112.44
+
+## VALORES APROXIMADOS
+1 - REAL // tem precisão aproximado de até 15 dígitos
+2 - FLOAT // mesmo conceito de real
+
+## TEMPORÁRIOS
+DATE - armazena data no formato aaaa/mm/dd
+DATETIME - armazena data e horas no formato aaaa/mm/dd:hh:mm:ss
+DATETIME2 - data e horascom adição de milissegundos no formato aaaa/mm/dd:hh:mm:sssssss
+SMALLDETETIME - data e horas nos respeitando o limite entre '1900-01-01:00:)0:00' até '2079-06-06:23:59:59'.
+TIME - horas, minutos, segundos e milissegundos respeitando o limite de '00:00:00.0000000' até '23:59:59.99999999'
+DATETIMEOFFSET - permite armazenar informações de data e horas incluindo o fuso horário
+*/
+
