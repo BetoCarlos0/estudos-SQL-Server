@@ -218,15 +218,13 @@ INNER JOIN DBO.[Order Details] B ON A.Discount = B.Discount
 
 --TIPOS DE DADOS--
 --BOLEANOS, CARACTERES, NÚMEROS, TEMPORAIS
-/*
-
-## CARACTERES
+--## CARACTERES
 tamanho fixo - CHAR // permite inserir até uma quantiudade fixa de cartacteres s sempre ocupa todo o espaço reservado 10/50
 
 tamanhgo variado - VARCHAR ou NVARCHAR // permite inserir até uma quantidade que for definida, porem só usa o espaço que for preenchido 10/50
 
-## NÚMEROS
-### VALORES EXATOS
+--## NÚMEROS
+--### VALORES EXATOS
 
 1 - TINYINT // não tem parte valor fracionado (ex. 1.43, 24.23) somente 1,123126, 324246, 313123 etc...
 2 - SMALLINT // mesma coisa porem limite maior
@@ -234,16 +232,59 @@ tamanhgo variado - VARCHAR ou NVARCHAR // permite inserir até uma quantidade qu
 4 - BIGINT // mesma coisa porem limite maior
 5 - NUMERIC ou DECIMAL // valores exatos, porem permite ter parte fracionados, que também pode ser especificado a precisão e escala (escala ou número de digitos na parte fracional) -ex: numeric (5, 2) 112.44
 
-## VALORES APROXIMADOS
+--## VALORES APROXIMADOS
 1 - REAL // tem precisão aproximado de até 15 dígitos
 2 - FLOAT // mesmo conceito de real
 
-## TEMPORÁRIOS
+--## TEMPORÁRIOS
 DATE - armazena data no formato aaaa/mm/dd
 DATETIME - armazena data e horas no formato aaaa/mm/dd:hh:mm:ss
 DATETIME2 - data e horascom adição de milissegundos no formato aaaa/mm/dd:hh:mm:sssssss
 SMALLDETETIME - data e horas nos respeitando o limite entre '1900-01-01:00:)0:00' até '2079-06-06:23:59:59'.
 TIME - horas, minutos, segundos e milissegundos respeitando o limite de '00:00:00.0000000' até '23:59:59.99999999'
 DATETIMEOFFSET - permite armazenar informações de data e horas incluindo o fuso horário
-*/
 
+--CREATE--
+CREATE TABLE Canal(
+	CanalId INT PRIMARY KEY,
+	Nome VARCHAR(150) NOT NULL,
+	CountagemInsc INT DEFAULT 0,
+	DataCriacao DATETIME NOT NULL
+)
+
+CREATE TABLE Video (
+	VideoId INT PRIMARY KEY,
+	Nome VARCHAR(150) NOT NULL,
+	Visualizacao INT DEFAULT 0,
+	Likes INT DEFAULT 0,
+	Deslikes INT DEFAULT 0,
+	Duracao INT NOT NULL,
+	CanalId INT FOREIGN KEY REFERENCES Canal(CanalId)
+)
+
+--INSERT--
+INSERT INTO Canal(CanalId, Nome, DataCriacao)
+values (1, 'canal teste', CURRENT_TIMESTAMP)
+
+INSERT INTO Video(VideoId, Nome, Duracao, CanalId)
+VALUES(1, 'VIDEOS DE TESTE', 120, 1)
+
+--UPDATE--
+UPDATE Video
+SET Nome = 'UM VIDEO', Duracao = 195
+WHERE VideoId = 1
+
+--DELETE--
+DELETE FROM Video
+WHERE VideoId = 1
+
+--ALTER ADD COLUMN--
+ALTER TABLE Video
+ADD Ativo bit
+--ALTER TYPE--
+ALTER TABLE VIDEO
+ALTER COLUMN ATIVO SMALLINT
+--ALTER COLUMN--
+EXEC sp_rename 'Video.ativo', 'ativado', 'COLUMN';
+--ALTER TABLE--
+EXEC sp_rename 'Youtube', 'Youtube2';
