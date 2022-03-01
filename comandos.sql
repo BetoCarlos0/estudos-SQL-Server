@@ -262,6 +262,13 @@ CREATE TABLE Video (
 	CanalId INT FOREIGN KEY REFERENCES Canal(CanalId)
 )
 
+CREATE TABLE Likes(
+	LikeId int primary key identity,
+	Quantidade int default 0,
+	VideoId INT FOREIGN KEY REFERENCES Video(VideoId)
+	ON DELETE CASCADE ON UPDATE CASCADE
+)
+
 --INSERT--
 INSERT INTO Canal(CanalId, Nome, DataCriacao)
 values (1, 'canal teste', CURRENT_TIMESTAMP)
@@ -288,3 +295,11 @@ ALTER COLUMN ATIVO SMALLINT
 EXEC sp_rename 'Video.ativo', 'ativado', 'COLUMN';
 --ALTER TABLE--
 EXEC sp_rename 'Youtube', 'Youtube2';
+
+--ALTER TABLE, SET PRIMARY KEY--
+ALTER TABLE Video
+ADD CONSTRAINT PK_VIDEO PRIMARY KEY(VideoId)
+
+--ALTER TABLE, DROP PRIMARY KEY--
+ALTER TABLE Video
+DROP CONSTRAINT PK__Video__BAE5126A27A4966B;
