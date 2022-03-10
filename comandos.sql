@@ -362,3 +362,12 @@ CREATE TABLE HistoricoViagens(
 	ON DELETE CASCADE
 	ON UPDATE CASCADE
 )
+--inserte em tabela com dados de outras tabelas
+INSERT INTO tabela_evento (evento, pessoa_id)
+	(SELECT 'EVENTO E', id FROM tabela_pessoa WHERE nome = 'Lisa Romero')
+
+--update em tabelas comd ados de outras tabelas
+UPDATE tabela_evento
+SET pessoa_id = (SELECT id from tabela_pessoa where nome = 'John Doe')
+WHERE evento = 'EVENTO D'
+
