@@ -362,6 +362,16 @@ CREATE TABLE HistoricoViagens(
 	ON DELETE CASCADE
 	ON UPDATE CASCADE
 )
+
+--Trabalhanbdo com guid em .net--
+CREATE TABLE Jogos(
+	Id uniqueidentifier default newid(),
+	Nome varchar(100) not null,
+	Produtora varchar(100) not null,
+	Preco float not null,
+	CONSTRAINT pk_jogo PRIMARY KEY (Id)
+)
+
 --inserte em tabela com dados de outras tabelas
 INSERT INTO tabela_evento (evento, pessoa_id)
 	(SELECT 'EVENTO E', id FROM tabela_pessoa WHERE nome = 'Lisa Romero')
