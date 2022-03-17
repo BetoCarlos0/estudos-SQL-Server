@@ -371,6 +371,13 @@ CREATE TABLE Jogos(
 	Preco float not null,
 	CONSTRAINT pk_jogo PRIMARY KEY (Id)
 )
+insert into Jogos values(default, 'Fifa20', 'EA Games', 200.50),
+						(default, 'Fifa19', 'EA Games', 201.50),
+						(default, 'Fifa18', 'EA Games', 202.50),
+						(default, 'Fifa17', 'EA Games', 205.50),
+						(default, 'Fifa16', 'EA Games', 210.50),
+						(default, 'Fifa15', 'EA Games', 220.50),
+						(default, 'Fifa14', 'EA Games', 180.50)
 
 --inserte em tabela com dados de outras tabelas
 INSERT INTO tabela_evento (evento, pessoa_id)
