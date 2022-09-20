@@ -399,3 +399,57 @@ set nome = 'teste'
 
 --realiza rollback até o ponto de BEGIN TRAN
 rollback
+
+
+--adidiona uma constraint e define que uma coluna tenha dados únicos
+ALTER TABLE Cliente
+ADD UNIQUE (rg)
+
+--adidiona uma constraint e define tipos de dados a ser inserido em tabela
+ALTER TABLE Cliente
+ADD CONSTRAINT CHK_COLUNA_GENERO CHECK(Gelero = 'M' OR Genero = 'F')
+
+--adidiona uma constraint e define valores default para colunas
+ALTER TABLE Cliente
+ADD DEFAULT GETDATE() FOR DataCriacao
+
+--deletar uma CONSTRAINT
+ALTER TABLE Cliente
+DROP CONSTRAINT name_constraint
+
+
+--criação de procedure (método de insert)
+CREATE PROCEDURE InsertNovoClient
+@Nome varchar(255),
+@Sobrenome varchar(255),
+@Email varchar(255),
+@AceitaComunicados bit
+AS
+INSERT INTO Clientes (Nome, Sobrenome, Email, AceitaComunicados) VALUES (@Nome, @Sobrenome, @Email, @AceitaComunicados)
+
+-- chamando a procedure InsertNovoClient
+EXEC InsertNovoClient
+'roberto',
+'carlos',
+'user@user.com',
+1
+
+--procedure de select de emailcliente
+CREATE PROCEDURE SelectEmailClientes
+@EmailCliente varchar(255)
+AS
+SELECT * FROM Clientes WHERE Email = @EmailCliente
+
+EXEC SelectEmailClientes 'user@user.com'
+
+
+--functions calcular porcentagem de Preços
+CREATE FUNCTION CalcularDesconto(@Preco Decimal(13, 2), @Porcentagem INT)
+RETURNS DECIMAL(13, 2)
+BEGIN
+	RETURN @Preco - @Preco / 100 * @Porcentagem
+END
+
+
+select nome, preco, dbo.CalcularDesconto(preco, 10) PrecoComDesconto
+from Produtos where tamanho = 'M'
