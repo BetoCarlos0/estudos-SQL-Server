@@ -239,7 +239,7 @@ tamanhgo variado - VARCHAR ou NVARCHAR // permite inserir até uma quantidade qu
 --## TEMPORÁRIOS
 DATE - armazena data no formato aaaa/mm/dd
 DATETIME - armazena data e horas no formato aaaa/mm/dd:hh:mm:ss
-DATETIME2 - data e horascom adição de milissegundos no formato aaaa/mm/dd:hh:mm:sssssss
+DATETIME2 - data e horas com adição de milissegundos no formato aaaa/mm/dd:hh:mm:sssssss
 SMALLDETETIME - data e horas nos respeitando o limite entre '1900-01-01:00:)0:00' até '2079-06-06:23:59:59'.
 TIME - horas, minutos, segundos e milissegundos respeitando o limite de '00:00:00.0000000' até '23:59:59.99999999'
 DATETIMEOFFSET - permite armazenar informações de data e horas incluindo o fuso horário
@@ -388,3 +388,14 @@ UPDATE tabela_evento
 SET pessoa_id = (SELECT id from tabela_pessoa where nome = 'John Doe')
 WHERE evento = 'EVENTO D'
 
+--update ou delete com rollback
+
+--salva modificações apartir daqui
+BEGIN TRAN
+
+--update sem where, então faço rollback
+UPDATE Cliente
+set nome = 'teste'
+
+--realiza rollback até o ponto de BEGIN TRAN
+rollback
